@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const bodyParser = require("body-parser");
+const https = require("https");
 
 router.use(bodyParser.json());
 const Streamings = require("../models/streaming");
@@ -53,25 +54,47 @@ router.route("/keywordprocessing/:streamname")
   })
 
 
-// router.get("/", function (req, res, next) {
+router.get("/", function (req, res, next) {
 
-//   // Standard Filter
-//   filter.standardFilter(questions, category).then((filteredData) => {
-//     console.log("Standard Filter results");
-//     console.log(filteredData);
-//     console.log('\n');
-//   });
+  _EXTERNAL_URL = 'https://words.bighugelabs.com/api/2/4d118534a6a0af9f2b7a788ad8bf5f31/computer/';
+
+  https.get(_EXTERNAL_URL, (resp) => {
+    let data = '';
+
+    // A chunk of data has been recieved.
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+      console.log("ended");
+      console.log(data);
+      res.json(data);
+      // console.log(JSON.stringify(data));
+    });
+
+  }).on("error", (err) => {
+
+    console.log("Error: " + err.message);
+  });
+  // // Standard Filter
+  // filter.standardFilter(questions, category).then((filteredData) => {
+  //   console.log("Standard Filter results");
+  //   console.log(filteredData);
+  //   console.log('\n');
+  // });
 
 
-//   // Advanced Filter (May consume more time for search results than the Standard Filter)
-//   filter.advancedFilter(questions, category).then((filteredData) => {
-//     console.log("Advanced Filter results");
-//     console.log(filteredData);
-//     console.log('\n');
-//   });
+  // // Advanced Filter (May consume more time for search results than the Standard Filter)
+  // filter.advancedFilter(questions, category).then((filteredData) => {
+  //   console.log("Advanced Filter results");
+  //   console.log(filteredData);
+  //   console.log('\n');
+  // });
 
-//   /* GET home page. */
+  /* GET home page. */
 
-// });
+});
 
 module.exports = router;

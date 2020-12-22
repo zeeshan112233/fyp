@@ -15,7 +15,8 @@ class Visualize extends Component {
     super(props);
     this.state = {
       query: "",
-      data: []
+      data: [],
+      finished: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -84,183 +85,282 @@ class Visualize extends Component {
     });
   };
   render() {
-    return (
 
-      <React.Fragment
-      // style={{
-      //   overflowX: "hidden",
-      //   overflowY: "hidden",
-      // }}
-      >
-        <div style={{
-          textAlign: "center", width: "100%", overflowY: "hidden",
-          overflowY: "hidden",
-        }}>
+    if (localStorage.streamname == this.props.match.params.name) {
+      return (
+
+        <React.Fragment
+        // style={{
+        //   overflowX: "hidden",
+        //   overflowY: "hidden",
+        // }}
+        >
 
           <div style={{
-            textAlign: "center",
-            justifyContent: "center",
-            display: "flex"
+            textAlign: "center", width: "100%", overflowY: "hidden",
+            overflowY: "hidden",
           }}>
-            <GooSpinner size={90} color="#57B0D4" />
-            <h1
-              style={{
-                textAlign: "center",
-                fontFamily: "Roboto",
-                color: "#4A96BA",
-                fontWeight: "bolder",
-                fontSize: 40,
-                marginBottom: "2%",
-                marginLeft: "2%"
-              }}
-            >
 
-              {`YOU ARE WATCING ${this.props.match.params.name}`}
-            </h1>   <GooSpinner size={90} color="#57B0D4" /></div>
-
-          <div style={{ textAlign: "center", display: "flex", width: "97%", height: 600, margin: "1%" }}>
-            <img
-              style={{
-                width: "65%",
-                height: 600,
-                // backgroundColor: "#D6EAF8",
-                // borderRadius: 20,
-                // borderWidth: 20,
-                paddingRight: 20,
-                justifyContent: "center",
-                overflowY: "hidden",
-                overflowY: "scroll",
-              }}
-              id="play"
-            />
-
-            <div
-              style={{
-                width: "35%",
-                height: 600,
-                backgroundColor: "#D6EAF8",
-                borderRadius: 5,
-                // borderWidth: 20,
-                justifyContent: "center",
-                justifyItems: "center", alignItems: "center",
-
-                paddingTop: "3%"
-              }}
-            >
-              <div
+            <div style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex"
+            }}>
+              <GooSpinner size={90} color="#57B0D4" />
+              <h1
                 style={{
-                  width: "100%",
-
-                  borderRadius: 20,
-                  marginTop: "4%",
-                  borderWidth: 20,
+                  textAlign: "center",
+                  fontFamily: "Roboto",
+                  color: "#4A96BA",
+                  fontWeight: "bolder",
+                  fontSize: 40,
+                  marginBottom: "2%",
+                  marginLeft: "2%"
                 }}
               >
-                <h1 style={{
-                  textAlign: "center",
-                  fontFamily: "Roboto",
-                  color: "#4A96BA",
-                  fontWeight: "bolder",
-                  marginBottom: "3%",
 
-                }}> ANY CONSUFISON / QUERY ?   </h1>
+                {`YOU ARE WATCING ${this.props.match.params.name}`}
+              </h1>   <GooSpinner size={90} color="#57B0D4" /></div>
 
-                <h1 style={{
-                  textAlign: "center",
-                  fontFamily: "Roboto",
-                  color: "#4A96BA",
-                  fontWeight: "bolder",
-                  marginBottom: "3%"
-                }}>
-                  Just write and send it !  </h1>
-              </div>
+            <div style={{ textAlign: "center", display: "flex", width: "97%", height: 600, margin: "1%" }}>
+              <img
+                style={{
+                  width: "65%",
+                  height: 600,
+                  // backgroundColor: "#D6EAF8",
+                  // borderRadius: 20,
+                  // borderWidth: 20,
+                  paddingRight: 20,
+                  justifyContent: "center",
+                  overflowY: "hidden",
+                  overflowY: "scroll",
+                }}
+                id="play"
+              />
 
-              <div style={{ paddingTop: 30 }}>
-                <textarea
-                  onChange={this.handleChange}
-                  value={this.state.query}
+              <div
+                style={{
+                  width: "35%",
+                  height: 600,
+                  backgroundColor: "#D6EAF8",
+                  borderRadius: 5,
+                  // borderWidth: 20,
+                  justifyContent: "center",
+                  justifyItems: "center", alignItems: "center",
+
+                  paddingTop: "3%"
+                }}
+              >
+                <div
                   style={{
-                    width: "60%",
-                    height: 200,
-                    borderRadius: 1,
-                    padding: 40,
+                    width: "100%",
 
+                    borderRadius: 20,
+                    marginTop: "4%",
+                    borderWidth: 20,
                   }}
                 >
+                  <h1 style={{
+                    textAlign: "center",
+                    fontFamily: "Roboto",
+                    color: "#4A96BA",
+                    fontWeight: "bolder",
+                    marginBottom: "3%",
+
+                  }}> ANY CONSUFISON / QUERY ?   </h1>
+
+                  <h1 style={{
+                    textAlign: "center",
+                    fontFamily: "Roboto",
+                    color: "#4A96BA",
+                    fontWeight: "bolder",
+                    marginBottom: "3%"
+                  }}>
+                    Just write and send it !  </h1>
+                </div>
+
+                <div style={{ paddingTop: 30 }}>
+                  <textarea
+                    onChange={this.handleChange}
+                    value={this.state.query}
+                    style={{
+                      width: "60%",
+                      height: 200,
+                      borderRadius: 1,
+                      padding: 40,
+
+                    }}
+                  >
 
 
-                </textarea>
-                <br></br>
-                <Button
-                  onClick={this.onClick}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    marginTop: "5%",
-                    width: "50%",
-                  }}
-                >
-                  SEND
+                  </textarea>
+                  <br></br>
+                  <Button
+                    onClick={this.onClick}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      marginTop: "5%",
+                      width: "50%",
+                    }}
+                  >
+                    SEND
           </Button>
 
+                </div>
               </div>
             </div>
-          </div>
 
 
-          <div style={{
-            backgroundColor: "#D6EAF8", margin: "1%", padding: "1%"
-          }}>
+            <div style={{
+              backgroundColor: "#D6EAF8", margin: "1%", padding: "1%"
+            }}>
 
 
-            <h1
-              style={{
-                textAlign: "center",
-                fontFamily: "Roboto",
-                color: "#4A96BA",
-                fontWeight: "bolder",
-                fontSize: 40,
-                marginLeft: "2%"
-              }}
-            >
+              <h1
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Roboto",
+                  color: "#4A96BA",
+                  fontWeight: "bolder",
+                  fontSize: 40,
+                  marginLeft: "2%"
+                }}
+              >
 
-              Already provided Answers !           </h1>  <Button
-              variant="contained"
-              color="primary"
-              style={{
-                margin: '0.5rem'
-              }}
-              onClick={this.handlefetchallquestion}
-              startIcon={<Autorenew />}
-            >
-              Refresh Answers
+                Already provided Answers !           </h1>  <Button
+                variant="contained"
+                color="primary"
+                style={{
+                  margin: '0.5rem'
+                }}
+                onClick={this.handlefetchallquestion}
+                startIcon={<Autorenew />}
+              >
+                Refresh Answers
       </Button>
 
 
 
 
-            {this.state.data.map(({ question, answer }, index) => {
-              return <div style={{ margin: '2rem', }}>
+              {this.state.data.map(({ question, answer }, index) => {
+                return <div style={{ margin: '2rem', }}>
 
 
-                <Volozehowe
-                  key={index}
-                  index={index}
-                  question={question}
-                  answer={answer}
+                  <Volozehowe
+                    key={index}
+                    index={index}
+                    question={question}
+                    answer={answer}
 
 
-                />
+                  />
 
-              </div>
+                </div>
 
 
-            })}
+              })}
+            </div>
+
           </div>
+        </React.Fragment>
+      );
+    }
+    else {
+      return (
 
-        </div>
-      </React.Fragment>
-    );
+        <React.Fragment
+        // style={{
+        //   overflowX: "hidden",
+        //   overflowY: "hidden",
+        // }}
+        >
+
+          <div style={{
+            textAlign: "center", width: "100%", overflowY: "hidden",
+            overflowY: "hidden",
+          }}>
+
+            <div style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex"
+            }}>
+
+              <h1
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Roboto",
+                  color: "#4A96BA",
+                  fontWeight: "bolder",
+                  fontSize: 40,
+                  marginBottom: "2%",
+                  marginLeft: "2%"
+                }}
+              >
+
+                {"Stream ended ! Important Queries with Answers are given below!"}
+              </h1>  </div>
+
+            <div style={{ textAlign: "center", alignItems: "center", width: "98%", height: 400, margin: "1%", backgroundColor: "#D6EAF8" }}>
+              <img
+                src="https://calamari.io/blog/user/pages/01.blog/01.consequences-of-being-late-to-work/calamari%20ilustracja%201%20.png"
+                style={{
+                  width: "50%",
+                  height: "100%",
+                  borderRadius: 30,
+                }}
+                alt="sdf"
+              />
+            </div>
+
+
+            <div style={{
+              backgroundColor: "#D6EAF8", margin: "1%", padding: "1%"
+            }}>
+
+
+              <h1
+                style={{
+                  textAlign: "center",
+                  fontFamily: "Roboto",
+                  color: "#4A96BA",
+                  fontWeight: "bolder",
+                  fontSize: 40,
+                  marginLeft: "2%"
+                }}
+              >
+
+                Important Queries with their Answers !           </h1>
+
+
+
+
+              {this.state.data.map(({ question, answer }, index) => {
+                return <div style={{ margin: '2rem', }}>
+
+
+                  <Volozehowe
+                    key={index}
+                    index={index}
+                    question={question}
+                    answer={answer}
+
+
+                  />
+
+                </div>
+
+
+              })}
+            </div>
+
+          </div>
+        </React.Fragment>
+      );
+    }
+
+
   }
 }
 
